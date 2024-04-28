@@ -1,0 +1,25 @@
+<h1> New Book </h1>
+
+<%= form_with model: @book, local: true do |form| %>
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :year %>
+    <%= form.number_field :year, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :price %>
+    <%= form.number_field :price, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :author %>
+    <%= form.text_field :author, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :publish_date %>
+    <%= form.date_field :publish_date, class: "form-control" %>
+  </div>
+  <%= form.submit "Create Book", class: "btn btn-primary" %>
+<% end %>

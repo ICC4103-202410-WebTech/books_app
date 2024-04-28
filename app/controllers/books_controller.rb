@@ -9,4 +9,8 @@ class BooksController < ApplicationController
     @genres = @book.genres
   end
 
+  def new
+    @book = Book.new
+  end
+
 end
