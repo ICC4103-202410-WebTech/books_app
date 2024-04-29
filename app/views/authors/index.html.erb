@@ -20,6 +20,9 @@
           <%= link_to author, class: "btn btn-outline-primary"  do %>
             <i class="bi bi-eye"></i>
           <% end %>
+          <%= link_to edit_author_path(author), class: "btn btn-outline-primary" do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
         </td>
       </tr>
       <% end %>

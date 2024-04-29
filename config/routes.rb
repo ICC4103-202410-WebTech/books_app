@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   get "/books/new", to: "books#new", as: "new_book"
   post "/books", to: "books#create"
   get "/books/:id", to: "books#show", as: "book"
-  resources :authors, only: [:index, :show]
+  resources :authors, only: [:index, :show, :new, :create, :edit, :update]
 end
