@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   root "application#index"
 
   get "/books", to: "books#index"
-  get "/books/:id", to: "books#show"
-  get "/books/new", to: "books#new"
+  get "/books/new", to: "books#new", as: "new_book"
+  post "/books", to: "books#create"
+  get "/books/:id", to: "books#show", as: "book"
   resources :authors, only: [:index, :show]
 end

@@ -1,16 +1,30 @@
 class BooksController < ApplicationController
 
   def index
-    @books = Book.all
+    @books = Book.all.preload(:author)
   end
 
   def show
     @book = Book.find_by(id: params[:id])
-    @genres = @book.genres
   end
 
   def new
     @book = Book.new
+  end
+
+  def create
+    @book = Book.new(book_params)
+    if @book.save
+      redirect_to books_path
+    else
+      render :new
+    end
+  end
+
+  private
+
+  def book_params
+    params.require(:book).permit(:title, :author_id, :year, :price, :publish_date)
   end
 
 end
