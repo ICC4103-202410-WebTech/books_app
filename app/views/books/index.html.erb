@@ -1,6 +1,7 @@
 <div class="container">
   <h1 style="color:blue"><i class="bi bi-book"></i> BOOKS </h1>
 
+  <%= link_to "New Book", new_book_path, class: "btn btn-primary mb-3" %>
   <table class="table table-bordered align-middle">
     <thead>
       <tr>
@@ -23,15 +24,15 @@
         <td><%= book.author.name %></td>
         <td><%= book.publish_date %></td>
         <td>
-            <%= link_to book, class: "btn btn-outline-primary"  do %>
-              <i class="bi bi-eye"></i>
-            <% end %>
-            <%= link_to book, class: "btn btn-outline-primary" do %>
-              <i class="bi bi-pencil"></i>
-            <% end %>
-            <%= link_to book, class: "btn btn-outline-primary" do %>
-              <i class="bi bi-trash"></i>
-            <% end %>
+          <%= link_to book, class: "btn btn-outline-primary"  do %>
+            <i class="bi bi-eye"></i>
+          <% end %>
+          <%= link_to edit_book_path(book.id), class: "btn btn-outline-primary" do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
+          <%= link_to book, data: { turbo_confirm: 'Are you sure?', turbo_method: "delete" }, class: "btn btn-outline-danger" do %>
+            <i class="bi bi-trash"></i>
+          <% end %>
         </td>
       </tr>
       <% end %>

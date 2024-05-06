@@ -8,5 +8,9 @@ class Author < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+  
+  def name_age
+    "#{first_name} #{last_name} (#{age})"
+  end
 
 end

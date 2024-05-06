@@ -17,7 +17,7 @@ class AuthorsController < ApplicationController
     if author.save!
       redirect_to authors_path
     else
-      render :new
+      redirect_to new_author_path
     end
   end
 

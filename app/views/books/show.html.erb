@@ -1,6 +1,15 @@
 <div class="container">
 <h1> <%= @book.title%> </h1>
-<%= link_to books_path, class: "btn btn-primary" do%>
-<i class="bi bi-arrow-90deg-left"></i> Back
-<% end %>
+<p> <strong>Year:</strong> <%= @book.year %> </p>
+<p> <strong>Price:</strong> <%= @book.price %> </p>
+<p> <strong>Author:</strong> <%= link_to @book.author.name, @book.author %> </p>
+<p> <strong>Publish Date:</strong> <%= @book.publish_date %> </p>
+<div class="actions">
+  <%= link_to books_path, class: "btn btn-primary" do%>
+    <i class="bi bi-arrow-90deg-left"></i> Back
+  <% end %>
+  <%= link_to edit_book_path(@book), class: "btn btn-warning" do%>
+    <i class="bi bi-pencil"></i> Edit
+  <% end %>
+</div>
 </div>
