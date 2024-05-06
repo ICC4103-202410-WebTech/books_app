@@ -8,12 +8,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "application#index"
 
-  resources :books, only: [:index, :show] 
-  get "/authors", to: "authors#index", as: "authors"
-  get "/authors/new", to: "authors#new", as: "new_author"
-  delete "/authors/:id", to: "authors#destroy"
-  get "/authors/:id", to: "authors#show", as: "author"
-  get "/authors/:id/edit", to: "authors#edit", as: "edit_author"
-  post "/authors", to: "authors#create"
-  patch "/authors/:id", to: "authors#update"
+  resources :books
+  resources :authors
 end
