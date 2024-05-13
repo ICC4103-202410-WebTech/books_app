@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   root "application#index"
 
   resources :books
-  resources :authors
+  resources :authors do
+    resources :books, only: [:new, :create]
+  end
 end

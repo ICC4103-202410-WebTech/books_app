@@ -16,8 +16,14 @@
     <%= form.date_field :publish_date, class: "form-control" %>
   </div>
   <div class="form-group mb-3">
-    <%= form.label :author_id %>
-    <%= form.collection_select :author_id, @authors, :id, :name_age, {prompt: 'Please select the author of this post'}, { class: "form-select" }%>
+    <% if author.present? %>
+      <%= form.hidden_field :author_id, value: author.id %>
+      <%= form.label :author_id %>
+      <%= form.text_field :author_id, class: "form-control", disabled: true, value: author.name %>
+    <% else %>
+      <%= form.label :author_id %>
+      <%= form.collection_select :author_id, authors, :id, :name_age, {prompt: 'Please select the author of this post'}, { class: "form-select" }%>
+    <% end %>
   </div>
   <div class="actions">
     <%= form.submit "Submit", class: "btn btn-primary" %>
