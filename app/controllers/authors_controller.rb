@@ -1,10 +1,11 @@
 class AuthorsController < ApplicationController
   def index
-    @authors = Author.all
+    @authors = Author.all.order(:first_name, :last_name)
   end
 
   def show
     @author = Author.find_by(id: params[:id])
+    @books = @author.books
   end
 
   def new
@@ -12,6 +13,7 @@ class AuthorsController < ApplicationController
   end
 
   def create
+    puts "params: #{params}"
     author = Author.new(author_params)
 
     if author.save!
@@ -26,7 +28,6 @@ class AuthorsController < ApplicationController
   end
   
   def update
-    puts "params: #{params}"
     author = Author.find_by(id: params[:id])
 
     if author.update!(author_params)
@@ -45,6 +46,6 @@ class AuthorsController < ApplicationController
   private
 
   def author_params
-    params.require(:author).permit(:first_name, :last_name, :age)
+    params.require(:author).permit(:first_name, :last_name, :age, books_attributes: [:title, :year, :price, :publish_date])
   end
 end
