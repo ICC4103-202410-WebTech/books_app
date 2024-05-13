@@ -11,6 +11,7 @@ class BooksController < ApplicationController
 
   def new
     @book = Book.new
+    @book.author = Author.find_by(id: params[:author_id])
     @authors = Author.all
   end
 

@@ -1,4 +1,45 @@
 <h1> <%= @author.name%> </h1>
+<p> <strong>Age:</strong> <%= @author.age %> </p>
+<p> <strong>Books:</strong> <%= @author.books.count %> </p>
+
+<h2>Books</h2>
+
+<%= link_to new_author_book_path(author_id: @author.id), class: "btn btn-primary" do%>
+  <i class="bi bi-plus"></i> Add Book
+<% end %>
+
+<table class="table table-bordered align-middle">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Price</th>
+      <th>Publish Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @author.books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.year %></td>
+        <td><%= book.price %></td>
+        <td><%= book.publish_date %></td>
+        <td>
+          <%= link_to book, class: "btn btn-outline-primary" do %>
+            <i class="bi bi-eye"></i>
+          <% end %>
+          <%= link_to edit_book_path(book), class: "btn btn-outline-warning" do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
+          <%= link_to book, data: { turbo_confirm: 'Are you sure?', turbo_method: "delete" }, class: "btn btn-outline-danger" do %>
+            <i class="bi bi-trash"></i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table> 
 <%= link_to authors_path, class: "btn btn-primary" do%>
-<i class="bi bi-arrow-90deg-left"></i> Back
+  <i class="bi bi-arrow-90deg-left"></i> Back
 <% end %>
