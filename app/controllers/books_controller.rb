@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @books = Book.all.preload(:author).order(:id)
@@ -26,7 +27,7 @@ class BooksController < ApplicationController
       flash[:error] = "Book creation failed"
       redirect_to new_book_path
     end
-  end 
+  end
 
   def edit
     @book = Book.find_by(id: params[:id])
