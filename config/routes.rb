@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :books
   resources :authors do
+    get :search, on: :collection
     resources :books, only: [:new]
   end
 end

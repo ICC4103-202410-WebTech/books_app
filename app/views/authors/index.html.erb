@@ -4,6 +4,13 @@
   <% if user_signed_in? %>
     <%= link_to "New Author" ,new_author_path, class: "btn btn-primary mb-3" %>
   <% end %>
+
+  <div class="input-group mb-3">
+    <input id="textoBusqueda" type="text" name="search" class="form-control" placeholder="Search author by name" aria-label="Search author by name" aria-describedby="button-addon2">
+    <button class="btn btn-outline-secondary" type="button" id="buscador">Search</button>
+  </div>
+
+  <div id="resultado">
   <table class="table table-bordered align-middle">
     <thead>
       <tr>
@@ -33,4 +40,25 @@
       </tr>
       <% end %>
     </tbody>
+  </table>
+  </div>
 </div>
+
+
+<script>
+  // buscar autores por nombre y mostrar resultados en tiempo real fetch simple
+  document.getElementById("buscador").addEventListener("click", function(event) {
+    event.preventDefault(); // Evita que se actualice la página al hacer clic en el enlace
+
+    const search = document.getElementById("textoBusqueda").value;
+    const response = fetch(`/authors/search?text=${search}`, 
+                    {
+                      headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                      }
+                    }).then(response => response.text())
+                      .then(html => {
+                        document.getElementById("resultado").innerHTML = html;
+                      });
+                    });
+</script>

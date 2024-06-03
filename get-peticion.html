@@ -1,0 +1,19 @@
+<a href="#" id="ajax_test">Test AJAX</a>
+<div id="result"></div>
+
+<script>
+  document.getElementById("ajax_test").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent the page from refreshing when clicking the link
+
+    fetch("http://localhost:3000/books", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/html"
+      }
+    })
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById("result").innerHTML = html;
+      });
+  });
+</script>
