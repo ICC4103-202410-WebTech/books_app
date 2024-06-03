@@ -1,5 +1,6 @@
 class AuthorsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  # before_action :authenticate_user!, except: [:index, :show]
+  skip_before_action :verify_authenticity_token
 
   def index
     @authors = Author.all.order(:first_name, :last_name)
@@ -10,6 +11,12 @@ class AuthorsController < ApplicationController
     @books = @author.books
   end
 
+  def search
+    string = params[:text]
+    @authors = Author.where("first_name LIKE ? OR last_name LIKE ?", "%#{string}%", "%#{string}%")
+    render layout: false
+  end
+
   def new
     @author = Author.new
     puts "session: #{session[:user_id]}"
@@ -17,13 +24,22 @@ class AuthorsController < ApplicationController
 
   def create
     puts "params: #{params}"
-    author = Author.new(author_params)
+    @author = Author.new(author_params)
 
-    if author.save!
-      redirect_to authors_path
-    else
-      redirect_to new_author_path
+    respond_to do |format|
+      if @author.save
+        format.html { redirect_to @author, notice: "Prueba was successfully created." }
+        format.json { render json: @author.to_json, status: :created }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @author.errors, status: :unprocessable_entity }
+      end
     end
+    # create acction scaffold rails when create
+
+
+
+
   end
 
   def edit
