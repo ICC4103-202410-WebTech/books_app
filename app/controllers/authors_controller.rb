@@ -1,4 +1,6 @@
 class AuthorsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     @authors = Author.all.order(:first_name, :last_name)
   end
@@ -10,6 +12,7 @@ class AuthorsController < ApplicationController
 
   def new
     @author = Author.new
+    puts "session: #{session[:user_id]}"
   end
 
   def create
@@ -26,7 +29,7 @@ class AuthorsController < ApplicationController
   def edit
     @author = Author.find_by(id: params[:id])
   end
-  
+
   def update
     author = Author.find_by(id: params[:id])
 
