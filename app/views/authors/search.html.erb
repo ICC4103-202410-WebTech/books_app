@@ -1,0 +1,29 @@
+  <table class="table table-bordered align-middle">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @authors.each_with_index do |author, index| %>
+      <tr>
+        <th scope="row"><%= index %></th>
+        <td><%= author.name %></td>
+        <td><%= author.age %></td>
+        <td>
+          <%= link_to author, class: "btn btn-outline-primary"  do %>
+            <i class="bi bi-eye"></i>
+          <% end %>
+          <%= link_to edit_author_path(author), class: "btn btn-outline-warning" do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
+          <%= link_to author, data: { turbo_confirm: 'Are you sure?', turbo_method: "delete" }, class: "btn btn-outline-danger" do %>
+            <i class="bi bi-trash"></i>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>

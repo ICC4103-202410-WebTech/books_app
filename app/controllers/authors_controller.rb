@@ -15,14 +15,24 @@ class AuthorsController < ApplicationController
     puts "session: #{session[:user_id]}"
   end
 
+  def search
+    string = params[:text]
+    @authors = Author.where("first_name LIKE ? OR last_name LIKE ?", "%#{string}%", "%#{string}%")
+    render layout: false
+  end
+
   def create
     puts "params: #{params}"
     author = Author.new(author_params)
 
-    if author.save!
-      redirect_to authors_path
-    else
-      redirect_to new_author_path
+    respond_to do |format|
+      if author.save
+        format.html { redirect_to authors_path }
+        format.json { render json: author.to_json }
+      else
+        format.html { redirect_to new_author_path }
+        format.json { render json: author.errors }
+      end
     end
   end
 

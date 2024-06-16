@@ -4,33 +4,62 @@
   <% if user_signed_in? %>
     <%= link_to "New Author" ,new_author_path, class: "btn btn-primary mb-3" %>
   <% end %>
-  <table class="table table-bordered align-middle">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Age</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @authors.each_with_index do |author, index| %>
-      <tr>
-        <th scope="row"><%= index %></th>
-        <td><%= author.name %></td>
-        <td><%= author.age %></td>
-        <td>
-          <%= link_to author, class: "btn btn-outline-primary"  do %>
-            <i class="bi bi-eye"></i>
-          <% end %>
-          <%= link_to edit_author_path(author), class: "btn btn-outline-warning" do %>
-            <i class="bi bi-pencil"></i>
-          <% end %>
-          <%= link_to author, data: { turbo_confirm: 'Are you sure?', turbo_method: "delete" }, class: "btn btn-outline-danger" do %>
-            <i class="bi bi-trash"></i>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
+
+  <div class="input-group mb-3">
+    <input id="textoBusqueda" type="text" name="search" class="form-control" placeholder="Search author by name" aria-label="Search author by name" aria-describedby="button-addon2">
+    <button class="btn btn-outline-secondary" type="button" id="buscador">Search</button>
+  </div>
+
+<div id="result">
+    <table class="table table-bordered align-middle">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Age</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @authors.each_with_index do |author, index| %>
+        <tr>
+          <th scope="row"><%= index %></th>
+          <td><%= author.name %></td>
+          <td><%= author.age %></td>
+          <td>
+            <%= link_to author, class: "btn btn-outline-primary"  do %>
+              <i class="bi bi-eye"></i>
+            <% end %>
+            <%= link_to edit_author_path(author), class: "btn btn-outline-warning" do %>
+              <i class="bi bi-pencil"></i>
+            <% end %>
+            <%= link_to author, data: { turbo_confirm: 'Are you sure?', turbo_method: "delete" }, class: "btn btn-outline-danger" do %>
+              <i class="bi bi-trash"></i>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<script>
+  document.getElementById('buscador').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    let textoBusqueda = document.getElementById('textoBusqueda').value;
+
+    fetch('/authors/search?text=' + textoBusqueda, {
+      request: 'GET', 
+      headers: {
+        'Content-Type': 'application/html'
+      }}).then(response => {
+        console.log(response);
+        return response.text();
+      }).then(html => {
+        console.log(html);
+        document.getElementById('result').innerHTML = html;
+      });
+  });
+</script>
